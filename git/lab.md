@@ -1,422 +1,744 @@
-# Task 1: Practice an Enterprise Git and GitHub Workflow
+# Git and GitHub Beginner Hands-On Lab
 
-## What you will do
-In this lab you will practice the normal Git workflow used when several people work on the same project:
+## Lab objective
 
-1. Configure your Git identity.
-2. Create or clone a GitHub repository.
-3. Create a separate feature branch.
-4. Make a small change.
-5. Check the change with `git status`.
-6. Stage and commit the change.
-7. Protect secrets using `.gitignore`.
-8. Push your feature branch to GitHub.
-9. Open a Pull Request for review.
+Complete a basic Git and GitHub workflow from start to finish:
 
-> Beginner idea: Think of the `main` branch as the approved master copy. A feature branch is your private working copy. A Pull Request asks the team to review your working copy before it becomes part of `main`.
+```text
+Configure Git
+    ↓
+Create a repository
+    ↓
+Create a feature branch
+    ↓
+Change a file
+    ↓
+Check the change
+    ↓
+Stage and commit
+    ↓
+Protect secrets
+    ↓
+Push to GitHub
+    ↓
+Create a pull request
+```
 
 ---
 
-## Before you start
+## Git in simple words
 
-You need:
+Think of Git as **Save Game for your project**.
 
-- Git installed on your computer.
-- A GitHub account and access to the repository you will use.
-- A terminal such as Git Bash, PowerShell, Windows Terminal, or the VS Code terminal.
-- A text editor such as VS Code.
+A **commit** is a named save point. If something breaks later, Git helps you understand what changed and return to an earlier version.
 
-Run this to confirm Git is installed:
+- **Git** is version-control software installed on your computer.
+- **GitHub** is an online service used to store Git repositories and collaborate with others.
+- **Repository** means the project folder Git tracks.
+- **Branch** is a separate line of work where you can make changes without immediately changing the main version.
+- **Commit** is a saved snapshot of your work.
+- **Push** sends local commits to GitHub.
+- **Pull request** asks for a branch to be reviewed and merged into another branch.
+
+---
+
+# Actionable Lab Execution Steps
+
+## Task 1: Check that Git is installed
+
+### Step 1.1: Open a terminal
+
+Use one of the following:
+
+- Windows Terminal
+- PowerShell
+- Command Prompt
+- Git Bash
+- Visual Studio Code terminal
+
+### Step 1.2: Check the Git version
 
 ```bash
 git --version
 ```
 
-If a Git version is displayed, continue.
+Expected result:
+
+```text
+git version 2.x.x
+```
+
+If the terminal says that `git` is not recognized, install Git from the official Git website and reopen the terminal.
+
+### Task completion check
+
+- [ ] `git --version` displays a Git version.
 
 ---
 
-# Step 1: Configure your Git username and email
+## Task 2: Configure your Git username and email
 
-Git records the author of every commit. Configure the name and email that should appear on your commits.
+Git records an author name and email address with every commit.
+
+### Step 2.1: Configure your name
+
+Replace the example with your own name:
 
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "your-email@example.com"
+git config --global user.name "Wilson Manda"
 ```
 
-Check the values:
+### Step 2.2: Configure your email
+
+Use the email associated with your GitHub account:
+
+```bash
+git config --global user.email "wilson.devops@gmail.com"
+```
+
+### Step 2.3: Verify the configuration
 
 ```bash
 git config --global user.name
+```
+
+```bash
 git config --global user.email
 ```
 
-### Expected result
-The terminal prints the name and email you configured.
+### Task completion check
 
-> Use the email associated with your GitHub account when that is your organization's required setup.
+- [ ] Git displays the correct username.
+- [ ] Git displays the correct email address.
 
 ---
 
-# Step 2: Create or clone the repository
+## Task 3: Create a local Git repository
 
-Use **one** of the following options.
-
-## Option A: Clone an existing GitHub repository
-
-On GitHub, open the repository, choose **Code**, and copy the repository URL. Then run:
+### Step 3.1: Create a project folder
 
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+mkdir git-lab
 ```
 
-Example shape:
+### Step 3.2: Enter the project folder
 
 ```bash
-git clone https://github.com/your-org/sample-app.git
-cd sample-app
+cd git-lab
 ```
 
-The example URL above is only a placeholder. Use the real URL provided for your lab.
-
-## Option B: Start a new local repository
+### Step 3.3: Initialize Git
 
 ```bash
-mkdir git-workflow-lab
-cd git-workflow-lab
 git init
 ```
 
-Create a starter README:
+`git init` changes an ordinary folder into a Git repository.
 
-```bash
-printf "# Git Workflow Lab\n" > README.md
-git add README.md
-git commit -m "Initial commit"
-```
-
-> If the lab requires GitHub review, the repository must also have a GitHub remote before you can push and create a Pull Request.
-
-Check the repository:
+### Step 3.4: Confirm the repository status
 
 ```bash
 git status
 ```
 
+### Task completion check
+
+- [ ] The `git-lab` folder exists.
+- [ ] `git init` completes successfully.
+- [ ] `git status` works inside the folder.
+
 ---
 
-# Step 3: Create a feature branch
+## Task 4: Create the first project file
 
-Do not make the lab change directly on `main`. Create a branch whose name explains the work.
+### Step 4.1: Open the project in Visual Studio Code
 
-Example from the task:
+```bash
+code .
+```
+
+If the `code` command is unavailable, open Visual Studio Code manually and select the `git-lab` folder.
+
+### Step 4.2: Create `README.md`
+
+Add the following content:
+
+```markdown
+# My Git Lab
+
+Learning Git step by step.
+```
+
+Save the file.
+
+### Step 4.3: Check the repository status
+
+```bash
+git status
+```
+
+Git should show `README.md` as an **untracked file**.
+
+An untracked file is a new file that Git is not tracking yet.
+
+### Task completion check
+
+- [ ] `README.md` exists.
+- [ ] `git status` shows `README.md` as untracked.
+
+---
+
+## Task 5: Stage and commit the first file
+
+### Step 5.1: Stage `README.md`
+
+```bash
+git add README.md
+```
+
+Staging means placing a change into the group of changes for the next commit.
+
+```text
+Working file
+     ↓
+git add
+     ↓
+Staging area
+```
+
+### Step 5.2: Check the status
+
+```bash
+git status
+```
+
+`README.md` should now appear under changes to be committed.
+
+### Step 5.3: Create the first commit
+
+```bash
+git commit -m "Add initial README"
+```
+
+The text after `-m` is the commit message. It should briefly describe the change.
+
+### Step 5.4: View the commit history
+
+```bash
+git log --oneline
+```
+
+Example output:
+
+```text
+a12bc34 Add initial README
+```
+
+### Task completion check
+
+- [ ] `README.md` is staged.
+- [ ] The first commit is created.
+- [ ] `git log --oneline` shows the commit.
+
+---
+
+## Task 6: Create a feature branch
+
+A branch provides a separate place to make a change without immediately changing the main branch.
+
+```text
+main
+  └── feature/200-ui-homepage
+```
+
+### Step 6.1: Create and switch to the feature branch
 
 ```bash
 git switch -c feature/200-ui-homepage
 ```
 
-If your Git version does not support `git switch`, use:
+If `git switch` is unavailable, use:
 
 ```bash
 git checkout -b feature/200-ui-homepage
 ```
 
-Confirm the active branch:
+### Step 6.2: Confirm the current branch
 
 ```bash
-git branch --show-current
+git branch
 ```
 
-### Expected result
+The current branch should have an asterisk:
 
 ```text
-feature/200-ui-homepage
+* feature/200-ui-homepage
 ```
+
+### Task completion check
+
+- [ ] The branch `feature/200-ui-homepage` exists.
+- [ ] The feature branch is the current branch.
 
 ---
 
-# Step 4: Make a small change
+## Task 7: Make and inspect a small change
 
-Open a sample file such as `README.md` and add a harmless line, for example:
+### Step 7.1: Update `README.md`
+
+Replace its contents with:
 
 ```markdown
-## Homepage update
-This change was created while practising the feature-branch workflow.
+# My Git Lab
+
+Learning Git step by step.
+
+## Homepage Feature
+
+This feature was created on a separate Git branch.
 ```
 
 Save the file.
 
-Now ask Git what changed:
+### Step 7.2: Check the status
 
 ```bash
 git status
 ```
 
-### What `git status` means
-Git should show the edited file as modified. At this point the file has changed, but it has not yet been selected for the next commit.
+Git should show that `README.md` was modified.
 
-Optional: see the actual text change:
+### Step 7.3: Inspect the exact change
 
 ```bash
 git diff
 ```
 
+`git diff` shows the lines that were added, changed, or removed before the change is staged.
+
+### Task completion check
+
+- [ ] `README.md` contains the homepage section.
+- [ ] `git status` reports the modified file.
+- [ ] `git diff` displays the change.
+
 ---
 
-# Step 5: Protect secret files with `.gitignore`
+## Task 8: Stage and commit the feature
 
-Files containing passwords, API keys, tokens, local environment variables, or credentials should not be committed.
+### Step 8.1: Stage the changed file
 
-Open or create a file named `.gitignore` in the repository root and add entries such as:
+```bash
+git add README.md
+```
+
+### Step 8.2: Confirm the staged change
+
+```bash
+git status
+```
+
+### Step 8.3: Commit the feature
+
+```bash
+git commit -m "Add homepage feature description"
+```
+
+### Step 8.4: Confirm that the working tree is clean
+
+```bash
+git status
+```
+
+Expected message:
+
+```text
+nothing to commit, working tree clean
+```
+
+### Task completion check
+
+- [ ] The feature change is staged.
+- [ ] The feature commit is created.
+- [ ] The working tree is clean.
+
+---
+
+## Task 9: Protect secret files with `.gitignore`
+
+Applications may use `.env` files for configuration values. A `.env` file can contain sensitive values, so it should normally not be committed.
+
+Never put real passwords, tokens, API keys, or private keys in this practice lab.
+
+### Step 9.1: Create `.gitignore`
+
+Create a file named `.gitignore` and add:
 
 ```gitignore
 .env
 .env.*
-*.pem
 *.key
-credentials.json
+*.pem
 ```
 
-> Important: `.gitignore` prevents matching **untracked** files from being added in normal Git operations. If a secret was already committed, simply adding the filename to `.gitignore` does not remove that secret from Git history. Treat an exposed credential as compromised and follow your organization's credential-rotation process.
+This tells Git not to track matching files.
 
-Check the repository again:
+```text
+README.md     → track
+.gitignore    → track
+.env          → ignore
+private.key   → ignore
+```
+
+### Step 9.2: Create a safe test `.env` file
+
+Create `.env` with fake practice data only:
+
+```text
+LAB_VALUE=example
+```
+
+### Step 9.3: Test the ignore rule
 
 ```bash
 git status
 ```
 
-You should see `.gitignore` as a new or modified file, while ignored secret files should not be offered as normal untracked files.
+The `.env` file should not be listed. The `.gitignore` file should be listed.
+
+### Step 9.4: Stage and commit `.gitignore`
+
+```bash
+git add .gitignore
+```
+
+```bash
+git commit -m "Add gitignore for secret files"
+```
+
+### Optional verification
+
+```bash
+git check-ignore -v .env
+```
+
+This command should show which `.gitignore` rule is ignoring `.env`.
+
+### Task completion check
+
+- [ ] `.gitignore` exists.
+- [ ] `.env` contains fake data only.
+- [ ] `.env` does not appear in `git status`.
+- [ ] `.gitignore` is committed.
 
 ---
 
-# Step 6: Stage the files
+## Task 10: Create a GitHub repository
 
-Staging means selecting exactly what should go into the next commit.
+### Step 10.1: Sign in to GitHub
 
-First inspect the status:
+Open GitHub in a browser and sign in.
 
-```bash
-git status
+### Step 10.2: Create the remote repository
+
+Create a repository named:
+
+```text
+git-lab
 ```
 
-For this lab, stage the sample change and `.gitignore`. For example:
+Because the local project already contains a README and commits, do not initialize the GitHub repository with another README, `.gitignore`, or license.
 
-```bash
-git add README.md .gitignore
+### Step 10.3: Copy the repository URL
+
+It should look similar to:
+
+```text
+https://github.com/YOUR-USERNAME/git-lab.git
 ```
 
-Check again:
+Use the URL displayed in your own GitHub repository.
 
-```bash
-git status
-```
+### Task completion check
 
-### Expected result
-The selected files appear under **Changes to be committed**.
-
-> Avoid blindly running `git add .` in a real project until you have checked what files are present. Explicit filenames are easier for a beginner to verify.
+- [ ] The GitHub repository `git-lab` exists.
+- [ ] The repository URL is copied.
 
 ---
 
-# Step 7: Commit the change
+## Task 11: Connect the local repository to GitHub
 
-A commit is a saved checkpoint in Git history.
+### Step 11.1: Add the GitHub repository as `origin`
 
-```bash
-git commit -m "Update homepage sample and ignore secret files"
-```
-
-Check the result:
+Replace the example URL with your actual repository URL:
 
 ```bash
-git status
+git remote add origin https://github.com/YOUR-USERNAME/git-lab.git
 ```
 
-You can also view the latest commit:
+`origin` is the standard nickname for the remote repository.
+
+### Step 11.2: Verify the remote
 
 ```bash
-git log -1 --oneline
+git remote -v
 ```
 
-### Expected result
-Your new commit appears at the top of the log.
+The result should show the GitHub URL for fetch and push operations.
+
+### Task completion check
+
+- [ ] The remote named `origin` exists.
+- [ ] `git remote -v` shows the correct GitHub URL.
 
 ---
 
-# Step 8: Push the feature branch to GitHub
+## Task 12: Push the main branch
 
-For a cloned repository that already has an `origin` remote, run:
+### Step 12.1: Check local branches
+
+```bash
+git branch
+```
+
+### Step 12.2: Switch to the initial branch
+
+If the initial branch is `main`:
+
+```bash
+git switch main
+```
+
+If the initial branch is `master`, switch to it and rename it:
+
+```bash
+git switch master
+git branch -M main
+```
+
+### Step 12.3: Push `main` to GitHub
+
+```bash
+git push -u origin main
+```
+
+The `-u` option connects the local `main` branch to the remote `main` branch. Later, you can normally use `git push` without writing the remote and branch names.
+
+GitHub may request authentication depending on your Git setup.
+
+### Step 12.4: Verify on GitHub
+
+Refresh the repository page. The initial `README.md` should appear on the `main` branch.
+
+### Task completion check
+
+- [ ] The local initial branch is named `main`.
+- [ ] `main` is pushed to GitHub.
+- [ ] GitHub displays the committed project file.
+
+---
+
+## Task 13: Push the feature branch
+
+### Step 13.1: Switch to the feature branch
+
+```bash
+git switch feature/200-ui-homepage
+```
+
+### Step 13.2: Push the branch to GitHub
 
 ```bash
 git push -u origin feature/200-ui-homepage
 ```
 
-The `-u` links your local branch with the remote branch. After that, future pushes from the same branch can normally use:
-
-```bash
-git push
-```
-
-Verify the remote configuration if needed:
-
-```bash
-git remote -v
-```
-
-> If `git remote -v` shows no GitHub remote, add the remote URL supplied for your lab before pushing. Do not invent a repository URL.
-
----
-
-# Step 9: Create a Pull Request
-
-After the branch is pushed:
-
-1. Open the repository on GitHub.
-2. Locate the pushed branch `feature/200-ui-homepage`.
-3. Choose the option to create a **Pull Request** for that branch.
-4. Set the base branch required by the lab, commonly `main`.
-5. Give the Pull Request a clear title, for example `Update homepage sample`.
-6. In the description, briefly explain what changed and how you checked it.
-7. Submit the Pull Request for review.
-
-Example description:
+GitHub should now contain both branches:
 
 ```text
-What changed:
-- Added a small README/homepage practice change.
-- Added common secret-file patterns to .gitignore.
-
-Validation:
-- Checked git status before staging.
-- Confirmed the commit on the feature branch.
+main
+feature/200-ui-homepage
 ```
 
-> Do not merge the Pull Request unless the lab or reviewer specifically asks you to do so.
+### Task completion check
+
+- [ ] The feature branch is pushed to GitHub.
+- [ ] GitHub shows `feature/200-ui-homepage`.
 
 ---
 
-# Step 10: Final verification
+## Task 14: Create a pull request
+
+A pull request asks for the feature branch to be reviewed and merged into `main`.
+
+```text
+feature/200-ui-homepage
+           ↓
+      Pull Request
+           ↓
+          main
+```
+
+### Step 14.1: Start the pull request
+
+Open the GitHub repository and compare the recently pushed feature branch.
+
+Use:
+
+```text
+Base branch: main
+Compare branch: feature/200-ui-homepage
+```
+
+### Step 14.2: Add a title
+
+```text
+Add homepage feature
+```
+
+### Step 14.3: Add a description
+
+```markdown
+## What changed
+
+- Updated the README
+- Added homepage feature information
+- Added `.gitignore` rules for secret files
+```
+
+### Step 14.4: Create the pull request
+
+Review the displayed file changes and create the pull request.
+
+### Task completion check
+
+- [ ] The base branch is `main`.
+- [ ] The compare branch is `feature/200-ui-homepage`.
+- [ ] The pull request has a clear title and description.
+- [ ] The pull request is created.
+
+---
+
+# Final validation
 
 Run these commands locally:
 
 ```bash
-git branch --show-current
 git status
-git log -1 --oneline
+git branch
+git log --oneline --all
 git remote -v
 ```
 
-You should be able to verify:
+Confirm the following:
 
-- You are working on the feature branch.
-- Your intended changes were committed.
-- No credential file was intentionally committed.
-- The repository has the expected GitHub remote.
-- The feature branch exists on GitHub.
-- A Pull Request has been created for review.
-
----
-
-# Easy mental model
-
-```text
-Repository = project folder tracked by Git
-Branch     = safe workspace for one change
-Status     = what changed?
-Stage      = what do I want in the checkpoint?
-Commit     = save the checkpoint locally
-Push       = send the branch to GitHub
-Pull Request = ask others to review the branch
-```
-
-The workflow is:
-
-```text
-main
-  |
-  +--> create feature branch
-          |
-          +--> edit file
-          +--> git status
-          +--> git add
-          +--> git commit
-          +--> git push
-                  |
-                  +--> GitHub Pull Request
-                           |
-                           +--> review
-```
+- [ ] `git status` does not show unexpected changes.
+- [ ] `main` and `feature/200-ui-homepage` exist.
+- [ ] The commit history includes the README, feature, and `.gitignore` commits.
+- [ ] The `origin` remote points to the correct GitHub repository.
+- [ ] The GitHub repository contains both branches.
+- [ ] A pull request exists from the feature branch into `main`.
 
 ---
 
-# Common beginner problems
+# Lab completion checklist
 
-## `git: command not found`
-Git is not installed or is not available in the terminal's PATH. Install/configure Git using the method approved for your machine, then reopen the terminal.
+- [ ] Git is installed.
+- [ ] Git username is configured.
+- [ ] Git email is configured.
+- [ ] The local `git-lab` repository is created.
+- [ ] `README.md` is created.
+- [ ] The first commit is created.
+- [ ] `feature/200-ui-homepage` is created.
+- [ ] A feature change is made.
+- [ ] `git status` is checked.
+- [ ] `git diff` is checked.
+- [ ] The feature is staged and committed.
+- [ ] `.gitignore` is created.
+- [ ] `.env` is ignored.
+- [ ] The GitHub repository is created.
+- [ ] The local repository is connected to GitHub.
+- [ ] `main` is pushed.
+- [ ] The feature branch is pushed.
+- [ ] A pull request is created.
 
-## `fatal: not a git repository`
-You are probably outside the repository folder.
+## Lab result
 
-Check the current directory and files:
+When every item is checked, the lab is complete.
 
-```bash
-pwd
-ls
+Remember the basic workflow:
+
+```text
+Edit → Status → Diff → Add → Commit → Push → Pull Request
 ```
 
-Then `cd` into the cloned/created repository.
+---
 
-## Push asks for authentication or fails
-Do not put a password or token into a source file. Use the GitHub authentication method approved for the lab or your organization.
+# Quick command reference
 
-## A secret file appears in `git status`
-Do not stage or commit it. Add the correct pattern to `.gitignore`, then run `git status` again.
-
-## I accidentally worked on `main`
-Do not push immediately. Preserve the change on a feature branch first when it has not been shared:
-
-```bash
-git switch -c feature/200-ui-homepage
-```
-
-Then check:
+## Check what is happening
 
 ```bash
 git status
-git log -1 --oneline
 ```
 
-If changes have already been pushed or credentials were committed, follow the lab/organization recovery procedure rather than rewriting shared history without guidance.
+## See unstaged changes
 
----
+```bash
+git diff
+```
 
-# Lab checklist
+## Stage a specific file
 
-- [ ] Git username configured.
-- [ ] Git email configured.
-- [ ] Repository created or cloned.
-- [ ] Feature branch created with a clear name.
-- [ ] Small sample change made.
-- [ ] `git status` checked before staging.
-- [ ] `.env` and other secret-file patterns added to `.gitignore`.
-- [ ] Intended files staged.
-- [ ] Change committed with a clear message.
-- [ ] Feature branch pushed to GitHub.
-- [ ] Pull Request created for review.
-- [ ] Required proof/submission link prepared.
+```bash
+git add README.md
+```
 
----
+## Stage all current changes
 
-# Submission note
+```bash
+git add .
+```
 
-The task screen asks for a shareable verification link. Use the exact deliverable required by your course/instructor. For this Git/GitHub task, a reviewer may logically need the GitHub Pull Request or repository evidence, but the screenshot's submission box specifically mentions a Google Drive/architecture-diagram link. Because those two instructions do not fully match, follow the course's authoritative submission guidance rather than guessing.
+Review `git status` before committing when using `git add .`.
 
----
+## Create a commit
 
-## Source note
+```bash
+git commit -m "Describe the change"
+```
 
-The visible task screenshot defines the five lab actions: configure Git and create/clone a repository; create a feature branch; make, inspect, stage and commit a small change; ignore `.env`/secret files; and push the feature branch and create a Pull Request.
+## List branches
 
-The attached FDE podcast preparation pack is broader project context and discusses Git/CI/CD and credential hygiene, but it is not the `Enterprise_Git_Playbook.pdf` named by this lab task. The detailed beginner explanations and commands above are supplemental guidance so the task can be followed step by step.
+```bash
+git branch
+```
+
+## Create and switch to a branch
+
+```bash
+git switch -c branch-name
+```
+
+## Switch branches
+
+```bash
+git switch branch-name
+```
+
+## View commit history
+
+```bash
+git log --oneline
+```
+
+## Download and integrate remote changes
+
+```bash
+git pull
+```
+
+## Upload local commits
+
+```bash
+git push
+```
