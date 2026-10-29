@@ -36,7 +36,7 @@ Students will gain hands-on experience with:
 | Lab 01 | <Lab topic> | <Technologies> | ✅ Completed |
 | Lab 02 | Native AWS CI/CD Pipeline | CodeCommit, CodeBuild, S3, EC2, IAM, SSM | 🚧 In Progress |
 | Lab 03 | <Next lab topic> | <Technologies> | ⏳ Upcoming |
-| Lab 17 | aws-devops-codecommit-codebuild | aws, code commit, code build,  | ⏳ Completed |
+| Lab 17 | aws-devops-codecommit-codebuild | aws, code commit, code build,  | ✅ Completed |
 
 Each lab has its own folder and detailed `README.md`.
 
